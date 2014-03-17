@@ -1,7 +1,13 @@
 TodoApp::Application.routes.draw do
   get "todos/index"
+  #match "todos/index" => "todos#index", :as => :index
 
   get "todos/delete"
+  #match "todos/delete" => "todos#delete", :as => :delete
+
+  match "todos/add" => "todos#add", :via => :post
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
