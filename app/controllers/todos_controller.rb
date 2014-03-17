@@ -4,6 +4,8 @@ class TodosController < ApplicationController
 	#@todo_item2 = "conception"
 	#@todo_array = ["recherche et analyse", "conception", "validation", "developpement"]
 	@todo_items = Todo.all
+	@new_todo = Todo.new
+
   end
 
   def delete
@@ -12,10 +14,13 @@ class TodosController < ApplicationController
   end
 
   def add
-  	todo = Todo.create(:todo_item => params[:todo_text])
-	if !todo.valid?
-		flash[:error] = todo.errors.full_messages.join("<br>").html_safe
+  	todo = Todo.create(:todo_item => params[:todo][:todo_item])
+	unless todo.valid?
+     	flash[:error] = todo.errors.full_messages.join("<br>").html_safe
+	else
+     	flash[:success] = "Todo added successfully"
 	end
+
   	redirect_to :action => 'index'
   end
 
