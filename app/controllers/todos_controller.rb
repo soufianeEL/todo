@@ -5,4 +5,10 @@ class TodosController < ApplicationController
 	#@todo_array = ["recherche et analyse", "conception", "validation", "developpement"]
 	@todo_items = Todo.all
   end
+
+  def delete
+  	t = Todo.last
+  	t.delete
+  end
+
 end
