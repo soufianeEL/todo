@@ -4,11 +4,15 @@
 		<div class="span4">
 			<h1>Todo App</h1>
 			<hr>
+			<% if !flash.notice.nil? %>
+			<div class="alert alert-info">
+			    <button type="button" class="close" data-dismiss="alert" >×</button>
+			    <strong><%= flash.notice + @todo.inspect %></strong>
+			</div>
+			<% end %>
+
 			<p>All your todos here</p>
-			<%= form_for @new_todo, :url => { :action => "add" }  do |f|  %>
-			    <%= f.text_field  :todo_item %>
-			    <%= f.submit "Add todo", class: "btn btn-primary" %>
-			 <%end%>
+			<%= render partial: 'form' %>
 
 			<% if !flash[:error].nil? %>
 			 <div class="alert alert-error">
@@ -31,12 +35,12 @@
 						<% if t.completed == true %>
 							<li style="color:grey;">
 							<%= check_box_tag  "todos_checkbox[]",t.id %>
-							<strike><%= t.todo_item %></strike>
+							<strike><%= link_to t.todo_item, edit_todo_path(t.id) %></strike>
 							</li>
 						<% else %>
 							<li>
 							<%= check_box_tag  "todos_checkbox[]",t.id %>
-							<%= t.todo_item %>
+							<%= link_to t.todo_item, edit_todo_path(t.id) %>
 							</li>
 						<% end %>
 					<%end%>
@@ -47,7 +51,7 @@
 
 			<br>
 			<br>
-			<a href="/todos/delete">Delete last todo</a>
+			<a href="/todos/last_delete">Delete last todo</a>
 		</div> <!-- span4 -->
 	</div> <!-- row -->
 </div> <!-- container -->
